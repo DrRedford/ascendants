@@ -37,12 +37,12 @@ Later, take the wheel and fight turn by turn.
 
 You start as a young mage, grow into a guild master, and send your heroes out on timed missions. Ascendants has two play modes that share one combat engine.
 
-| | 🌙 Idle mode | 🎯 Manual mode |
-| --- | --- | --- |
-| **Built** | First | Later |
-| **How it plays** | Pick a hero and an activity (for example, Goblin Cave, 5 minutes) and close the app | Start a battle against a monster (or later another user) and choose an action each turn |
-| **What the server does** | A queued job resolves the whole fight round by round when the timer ends | Runs one round per player action |
-| **What you get** | XP, loot, and a combat log to read next login | Events returned for Vue to animate |
+|                          | 🌙 Idle mode                                                                        | 🎯 Manual mode                                                                          |
+| ------------------------ | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| **Built**                | First                                                                               | Later                                                                                   |
+| **How it plays**         | Pick a hero and an activity (for example, Goblin Cave, 5 minutes) and close the app | Start a battle against a monster (or later another user) and choose an action each turn |
+| **What the server does** | A queued job resolves the whole fight round by round when the timer ends            | Runs one round per player action                                                        |
+| **What you get**         | XP, loot, and a combat log to read next login                                       | Events returned for Vue to animate                                                      |
 
 > [!TIP]
 > Idle timers stay short, **2 to 10 minutes**, not hours. That keeps the game lively and makes the queued jobs easy to test and demo.
@@ -74,40 +74,40 @@ All heroes are mages, and every hero has an element and a sub typing (for now).
 - **Main typing (element).** Borrowed from the Pokemon idea of types. It decides strengths and weaknesses in combat.
 - **Sub typing (role).** Likely driven by stats, such as DPS, Support, Balanced, or Tank.
 
-| Group | Typings |
-| --- | --- |
-| **Starter typings** | 🌬️ Air · 🔥 Fire · 💧 Water · 🪨 Earth (the four Avatar elements) |
+| Group                         | Typings                                                                                     |
+| ----------------------------- | ------------------------------------------------------------------------------------------- |
+| **Starter typings**           | 🌬️ Air · 🔥 Fire · 💧 Water · 🪨 Earth (the four Avatar elements)                           |
 | **More typings, added later** | ✨ Light · 🌑 Dark · 👤 Shadows · 🧚 Fairy · 🐉 Dragon · 🧛 Vampire · 🌌 Space · 🕳️ Gravity |
-| **Roles (sub typing)** | 🗡️ DPS · 💚 Support · ⚖️ Balanced · 🛡️ Tank, and more as stats grow |
+| **Roles (sub typing)**        | 🗡️ DPS · 💚 Support · ⚖️ Balanced · 🛡️ Tank, and more as stats grow                         |
 
 ### 🕹️ Idle activities
 
-| Activity | Options | Notes |
-| --- | --- | --- |
-| ⚔️ **Battle** | Dungeon, Forest, City | Fights resolve into a combat log |
-| 🏋️ **Training** | Level up, or train each stat | Individual stats get added later |
-| 💎 **Look for gear and items** | Loot hunting | Drops should be exciting |
-| 📜 **Quest** | Any of the activities above | Wraps another activity with a goal |
+| Activity                       | Options                      | Notes                              |
+| ------------------------------ | ---------------------------- | ---------------------------------- |
+| ⚔️ **Battle**                  | Dungeon, Forest, City        | Fights resolve into a combat log   |
+| 🏋️ **Training**                | Level up, or train each stat | Individual stats get added later   |
+| 💎 **Look for gear and items** | Loot hunting                 | Drops should be exciting           |
+| 📜 **Quest**                   | Any of the activities above  | Wraps another activity with a goal |
 
 ### 💥 Combat
 
 Combat follows the Pokemon model.
 
-| Multiplier | Meaning | Notes |
-| :---: | --- | --- |
-| 🚫 **0x** | Immune | Rare, only for a few matchups |
-| 🛡️ **0.5x** | Not very effective | |
-| ⚖️ **1x** | Normal | |
-| 💥 **2x** | Super effective | |
+| Multiplier  | Meaning                | Notes                                                        |
+| :---------: | ---------------------- | ------------------------------------------------------------ |
+|  🚫 **0x**  | Immune                 | Rare, only for a few matchups                                |
+| 🛡️ **0.5x** | Not very effective     |                                                              |
+|  ⚖️ **1x**  | Normal                 |                                                              |
+|  💥 **2x**  | Super effective        |                                                              |
 | 💥💥 **4x** | Double super effective | Possible, undecided. Needs a second typing on a hero or move |
-| ⭐ **1.5x** | Critical hit | Applies on top of the type multiplier |
+| ⭐ **1.5x** | Critical hit           | Applies on top of the type multiplier                        |
 
-| Action | What it does | Status |
-| --- | --- | --- |
-| ⚔️ **Attack** | Each hero picks from 2 moves. A move is either an attack move or a buff/debuff move | Core |
-| 🎒 **Items** | Use an item during battle | Later |
-| 🏃 **Run** | Leave the battle | Core |
-| 🔄 **Switch** | Swap in a different hero | Core |
+| Action        | What it does                                                                        | Status |
+| ------------- | ----------------------------------------------------------------------------------- | ------ |
+| ⚔️ **Attack** | Each hero picks from 2 moves. A move is either an attack move or a buff/debuff move | Core   |
+| 🎒 **Items**  | Use an item during battle                                                           | Later  |
+| 🏃 **Run**    | Leave the battle                                                                    | Core   |
+| 🔄 **Switch** | Swap in a different hero                                                            | Core   |
 
 > [!TIP]
 > The type chart lives in data (a table or config file), not in conditionals, so adding the later typings is a data change instead of a code change.
@@ -126,27 +126,27 @@ Five decisions made on day one keep every later phase cheap.
 
 Standard Laravel with Vue on Inertia is the lowest-friction choice for a mob, since there is no separate API to design in the first sessions.
 
-| Concern | Choice | Notes |
-| --- | --- | --- |
-| 🧱 **Framework** | Laravel (current release) | Use Sail or Herd so everyone has the same environment |
-| 🎨 **Frontend** | Vue 3 with Inertia | Composition API, `<script setup>` |
-| 🗄️ **Database** | MySQL or Postgres | Pick one and stick with it. SQLite is fine for the very first session |
-| ⏳ **Queues** | Database driver, then Redis | Delayed jobs power quest timers. Use Horizon once on Redis |
-| 🕒 **Scheduler** | Laravel scheduler | Daily resets, boss rotation, cleanup |
-| 📡 **Realtime** | Laravel Reverb | Only needed in the PvP and guild boss phase |
-| 🧪 **Tests** | Pest | Engine tests first. They become the driver's checklist |
-| 🔐 **Auth** | Breeze | Gets everyone logged in within minutes |
+| Concern          | Choice                      | Notes                                                                 |
+| ---------------- | --------------------------- | --------------------------------------------------------------------- |
+| 🧱 **Framework** | Laravel (current release)   | Use Sail or Herd so everyone has the same environment                 |
+| 🎨 **Frontend**  | Vue 3 with Inertia          | Composition API, `<script setup>`                                     |
+| 🗄️ **Database**  | MySQL or Postgres           | Pick one and stick with it. SQLite is fine for the very first session |
+| ⏳ **Queues**    | Database driver, then Redis | Delayed jobs power quest timers. Use Horizon once on Redis            |
+| 🕒 **Scheduler** | Laravel scheduler           | Daily resets, boss rotation, cleanup                                  |
+| 📡 **Realtime**  | Laravel Reverb              | Only needed in the PvP and guild boss phase                           |
+| 🧪 **Tests**     | Pest                        | Engine tests first. They become the driver's checklist                |
+| 🔐 **Auth**      | Breeze                      | Gets everyone logged in within minutes                                |
 
 ## 🗺️ Roadmap
 
-| Phase | Goal | Includes | |
-| --- | --- | --- | --- |
-| **Phase 0** | Idle mode with made-up (placeholder) results | Starter heroes | 🎯 Next |
-| **Phase 1** | Idle mode with a real battle system | Hero leveling and training | 📋 Planned |
-| **Phase 2** | Actually simulate the fights | Showing a proper combat log | 📋 Planned |
-| **Phase 3** | Manual play, where the player picks each action | No PvP yet | 📋 Planned |
-| **Phase 4** | Add an option for PvP | | 🔮 Tentative |
-| **Future** | Team battles and story | | 🌠 Someday |
+| Phase       | Goal                                            | Includes                    |              |
+| ----------- | ----------------------------------------------- | --------------------------- | ------------ |
+| **Phase 0** | Idle mode with made-up (placeholder) results    | Starter heroes              | 🎯 Next      |
+| **Phase 1** | Idle mode with a real battle system             | Hero leveling and training  | 📋 Planned   |
+| **Phase 2** | Actually simulate the fights                    | Showing a proper combat log | 📋 Planned   |
+| **Phase 3** | Manual play, where the player picks each action | No PvP yet                  | 📋 Planned   |
+| **Phase 4** | Add an option for PvP                           |                             | 🔮 Tentative |
+| **Future**  | Team battles and story                          |                             | 🌠 Someday   |
 
 ## 🚀 Getting started
 
