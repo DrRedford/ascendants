@@ -8,7 +8,7 @@ class Hero extends Model
 {
     protected $fillable = [
         'name',
-        'typing',
+        'primary_type',
         'user_id',
         'level',
         'role',
